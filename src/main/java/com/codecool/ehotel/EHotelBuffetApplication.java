@@ -1,17 +1,13 @@
 package com.codecool.ehotel;
 
+
+import com.codecool.ehotel.service.guest.GenerateRandomGuest;
+
 public class EHotelBuffetApplication {
-
     public static void main(String[] args) {
-
-        // Initialize services
-
-
-        // Generate guests for the season
-
-
-        // Run breakfast buffet
-
+        GenerateRandomGuest guest = new GenerateRandomGuest();
+        guest.getSeason();
+        guest.generateGuestList(50);
 
     }
 }
