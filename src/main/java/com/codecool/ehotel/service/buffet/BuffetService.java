@@ -1,6 +1,9 @@
 package com.codecool.ehotel.service.buffet;
 
 import com.codecool.ehotel.model.Meal;
+import com.codecool.ehotel.model.MealType;
+
+import java.time.LocalDate;
 import java.util.List;
 
 public interface BuffetService {
@@ -9,5 +12,7 @@ public interface BuffetService {
 
      void removeBadMeals();
 
-     void generateMeals();
+     void generateMeals(LocalDate timestamp);
+
+     void eatMeal(MealType meal);
 }
