@@ -27,6 +27,9 @@ public class BuffetProvider implements BuffetService{
     };
 
     public void collectFoodWaste(LocalDate timeCheck) {
+        for (Meal meal : Meals) {
+
+        }
     };
 
     public void eatMeal(MealType mealToEat) {
