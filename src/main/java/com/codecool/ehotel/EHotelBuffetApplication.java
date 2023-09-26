@@ -5,19 +5,20 @@ import com.codecool.ehotel.service.buffet.BuffetProvider;
 import com.codecool.ehotel.service.buffet.BuffetService;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class EHotelBuffetApplication {
 
     public static void main(String[] args) {
-        LocalDate date = LocalDate.parse("2023-09-26");
+        LocalTime date = LocalTime.now();
         // Initialize services
         BuffetService buffet = new BuffetProvider();
-        buffet.generateMeals(date);
+        buffet.generateMeals(date, 10);
 
         for (Meal meal : buffet.getFoodPortions()) {
-            System.out.println(meal.mealType());
         };
-
+        LocalTime date2 = LocalTime.now();
+        buffet.collectFoodWaste(date2);
 
         // Generate guests for the season
 

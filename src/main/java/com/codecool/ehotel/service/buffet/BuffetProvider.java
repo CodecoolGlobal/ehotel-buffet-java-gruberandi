@@ -1,9 +1,12 @@
 package com.codecool.ehotel.service.buffet;
 
 import com.codecool.ehotel.model.Meal;
+import com.codecool.ehotel.model.MealDurability;
 import com.codecool.ehotel.model.MealType;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +14,7 @@ public class BuffetProvider implements BuffetService{
 
     public List<Meal> Meals = new ArrayList<>();
 
-    public void generateMeals(LocalDate timestamp, int amount) {
+    public void generateMeals(LocalTime timestamp, int amount) {
         for (MealType mealtype : MealType.values()) {
             Meal meal = new Meal(mealtype, timestamp);
             for (int i = 0; i < amount; i++) {
@@ -26,9 +29,13 @@ public class BuffetProvider implements BuffetService{
 
     };
 
-    public void collectFoodWaste(LocalDate timeCheck) {
+    public void collectFoodWaste(LocalTime timeCheck){
         for (Meal meal : Meals) {
-
+            if (meal.mealType().getDurability().equals(MealDurability.SHORT) && meal.prepDate().plusMinutes(90).isBefore(timeCheck)) {
+                Meals.remove(meal);
+            } else if ((meal.mealType().getDurability().equals(MealDurability.SHORT) && timeCheck.getHour() == 10) {
+                Meals.remove(meal);
+            }
         }
     };
 
