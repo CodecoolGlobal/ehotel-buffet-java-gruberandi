@@ -26,14 +26,32 @@ public class BuffetProvider implements BuffetService{
 
     };
 
-    public void removeBadMeals() {
+    public void collectFoodWaste(LocalDate timeCheck) {
     };
 
     public void eatMeal(MealType mealToEat) {
-        for ( Meal meal : Meals) {
-            if (meal.mealType().equals(mealToEat)) {
+        List<Meal> filteredMeals = filterMeal(mealToEat);
+        removeFreshestMeal(filteredMeals);
+    }
 
+    private List<Meal> filterMeal(MealType mealToEat) {
+        List<Meal> filteredMeals = new ArrayList<>();
+
+        for (Meal meal : Meals) {
+            if (meal.mealType().equals(mealToEat)) {
+                filteredMeals.add(meal);
             }
         }
+        return filteredMeals;
+    }
+
+    private void removeFreshestMeal(List<Meal> filteredMeals) {
+        Meal freshestMeal = filteredMeals.get(0);
+        for (Meal meal : filteredMeals) {
+            if (meal.prepDate().isAfter(freshestMeal.prepDate())) {
+                freshestMeal = meal;
+            }
+        }
+        Meals.remove(freshestMeal);
     }
 }
