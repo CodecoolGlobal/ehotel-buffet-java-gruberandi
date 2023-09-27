@@ -73,7 +73,7 @@ public class GenerateRandomGuest implements GuestService{
           allGuest.add(generateRandomGuest(seasonStart,seasonEnd));
 
        }
-       System.out.println(allGuest);
+
        return  allGuest;
    }
 
