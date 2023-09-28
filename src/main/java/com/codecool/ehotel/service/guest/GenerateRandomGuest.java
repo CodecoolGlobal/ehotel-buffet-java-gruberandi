@@ -3,6 +3,8 @@ package com.codecool.ehotel.service.guest;
 import com.codecool.ehotel.Logger.ConsoleLogger;
 import com.codecool.ehotel.model.Guest;
 import com.codecool.ehotel.model.GuestType;
+import com.codecool.ehotel.service.season.GetSeason;
+import com.codecool.ehotel.service.season.SeasonGetter;
 
 import javax.sound.sampled.FloatControl;
 import java.time.LocalDate;
@@ -16,8 +18,8 @@ public class GenerateRandomGuest implements GuestService{
     Scanner scanner = new Scanner(System.in);
     ConsoleLogger logger = new ConsoleLogger();
     String[] names = {"Alex" ,"Mia", "Zoe","Max"};
-    LocalDate seasonStart = LocalDate.of(2020, 3, 10);
-    LocalDate seasonEnd =LocalDate.of(2020, 3, 19);
+    SeasonGetter seasonGetter;
+
 
     @Override
     public Guest generateRandomGuest(LocalDate seasonStart, LocalDate seasonEnd) {
@@ -54,24 +56,12 @@ public class GenerateRandomGuest implements GuestService{
         GuestType guest = guestTypes.get(random.nextInt(0, guestTypes.size()));
         return  guest;
     }
-   public void getSeason(){
-        logger.logInfo("Give a start date (YYYY-MM-DD):");
-        String sDate = scanner.nextLine();
-        LocalDate starterDate = LocalDate.parse(sDate);
-       logger.logInfo("Give a End date (YYYY-MM-DD):");
-       String eDate = scanner.nextLine();
-       LocalDate endDate = LocalDate.parse(eDate);
-        this.seasonStart = starterDate;
-        this.seasonEnd = endDate;
-
-   }
    public ArrayList<Guest> generateGuestList(int guestNumber){
 
        int randomGuestNUmber = random.nextInt(0,50);
        ArrayList<Guest> allGuest= new ArrayList<>();
        for(int i = 0; i < guestNumber; i ++){
-          allGuest.add(generateRandomGuest(seasonStart,seasonEnd));
-
+          allGuest.add(generateRandomGuest(seasonGetter.getSeasonStart(),seasonGetter.getSeasonEnd()));
        }
 
        return  allGuest;
