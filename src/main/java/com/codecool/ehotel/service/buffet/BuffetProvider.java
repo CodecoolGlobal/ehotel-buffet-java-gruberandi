@@ -14,6 +14,8 @@ public class BuffetProvider implements BuffetService{
 
     public List<Meal> Meals = new ArrayList<>();
 
+    public int loss = 0;
+
     public void generateMeals(LocalTime timestamp, int amount) {
         for (MealType mealtype : MealType.values()) {
             Meal meal = new Meal(mealtype, timestamp);
@@ -25,15 +27,19 @@ public class BuffetProvider implements BuffetService{
     public List<Meal> getFoodPortions() {
         return Meals;
     };
-    public void makeNewPortion() {
-
+    public void makeNewPortion(MealType mealtype, LocalTime timestamp, int amount) {
+        Meal meal = new Meal(mealtype, timestamp);
+        for (int i = 0; i < amount; i++) {
+            Meals.add(meal);
+        }
     };
 
     public void collectFoodWaste(LocalTime timeCheck){
         for (Meal meal : Meals) {
             if (meal.mealType().getDurability().equals(MealDurability.SHORT) && meal.prepDate().plusMinutes(90).isBefore(timeCheck)) {
                 Meals.remove(meal);
-            } else if ((meal.mealType().getDurability().equals(MealDurability.SHORT) && timeCheck.getHour() == 10) {
+            } else if (meal.mealType().getDurability().equals(MealDurability.SHORT) && timeCheck.getHour() == 10) {
+                loss += meal.mealType().getCost();
                 Meals.remove(meal);
             }
         }
