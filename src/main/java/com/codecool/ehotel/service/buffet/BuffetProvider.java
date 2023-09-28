@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static com.codecool.ehotel.model.MealDurability.MEDIUM;
+import static com.codecool.ehotel.model.MealDurability.SHORT;
+
 public class BuffetProvider implements BuffetService{
 
     private Random random = new Random();
@@ -41,18 +44,18 @@ public class BuffetProvider implements BuffetService{
 
     public void collectFoodWaste(LocalTime timeCheck) {
         LocalTime endOfBreakfast = LocalTime.of(10,0);
-        ArrayList<Meal> rottenFoods = new ArrayList<>();
+        ArrayList<Meal> foodWaste = new ArrayList<>();
         for (Meal meal : Meals) {
             LocalTime endDate = meal.prepDate().plusMinutes(90);
-            if (meal.mealType().getDurability().equals(MealDurability.SHORT) && (endDate.isBefore(timeCheck) || endDate.equals(timeCheck))) {
-                rottenFoods.add(meal);
-            } else if (meal.mealType().getDurability().equals(MealDurability.MEDIUM) && timeCheck.equals(endOfBreakfast)) {
+            if (meal.mealType().getDurability().equals(SHORT) && (endDate.isBefore(timeCheck) || endDate.equals(timeCheck))) {
+                foodWaste.add(meal);
+            } else if (meal.mealType().getDurability().equals(MEDIUM) && timeCheck.equals(endOfBreakfast)) {
                 loss += meal.mealType().getCost();
-                rottenFoods.add(meal);
+                foodWaste.add(meal);
             }
 
         }
-        for (Meal meal : rottenFoods) {
+        for (Meal meal : foodWaste) {
             Meals.remove(meal);
         }
     }
