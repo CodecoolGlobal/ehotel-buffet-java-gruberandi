@@ -40,13 +40,22 @@ public class BuffetProvider implements BuffetService{
     };
 
     public void collectFoodWaste(LocalTime timeCheck) {
+        LocalTime endOfBreakfast = LocalTime.of(10,0);
+        ArrayList<Meal> rottenFoods = new ArrayList<>();
         for (Meal meal : Meals) {
-            if (meal.mealType().getDurability().equals(MealDurability.SHORT) && meal.prepDate().plusMinutes(90).isBefore(timeCheck)) {
-                Meals.remove(meal);
-            } else if (meal.mealType().getDurability().equals(MealDurability.SHORT) && timeCheck.getHour() == 10) {
+            LocalTime endDate = meal.prepDate().plusMinutes(90);
+            if (meal.mealType().getDurability().equals(MealDurability.SHORT) && (endDate.isBefore(timeCheck) || endDate.equals(timeCheck))) {
+                rottenFoods.add(meal);
+                System.out.println(meal.mealType());
+            } else if (meal.mealType().getDurability().equals(MealDurability.MEDIUM) && timeCheck.equals(endOfBreakfast)) {
                 loss += meal.mealType().getCost();
-                Meals.remove(meal);
+                rottenFoods.add(meal);
+                System.out.println(meal.mealType());
             }
+
+        }
+        for (Meal meal : rottenFoods) {
+            Meals.remove(meal);
         }
     }
 
@@ -55,7 +64,7 @@ public class BuffetProvider implements BuffetService{
         removeFreshestMeal(filteredMeals);
     }
 
-    private List<Meal> filterMeal(MealType mealToEat) {
+    public List<Meal> filterMeal(MealType mealToEat) {
         List<Meal> filteredMeals = new ArrayList<>();
 
         for (Meal meal : Meals) {
@@ -75,6 +84,8 @@ public class BuffetProvider implements BuffetService{
         }
         Meals.remove(freshestMeal);
     }
+
+    public int getLoss() {return loss;}
 
 
 }

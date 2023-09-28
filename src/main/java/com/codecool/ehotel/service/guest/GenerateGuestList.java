@@ -39,6 +39,9 @@ public class GenerateGuestList {
         ArrayList<ArrayList<Guest>> saveAllGuest = allGuest;
 
         ArrayList<ArrayList<Guest>> guestForTheActualCycle = new ArrayList<>();
+        System.out.println("Showme");
+        System.out.println(allGuest.get(actualDay));
+        System.out.println(allGuest.get(actualDay).size());
         int getGuestNumbers = allGuest.get(actualDay).size();
         for (int j = 0; j < 8; j++) {
             int getListSize = Math.round(random.nextFloat(getGuestNumbers) / 8);
