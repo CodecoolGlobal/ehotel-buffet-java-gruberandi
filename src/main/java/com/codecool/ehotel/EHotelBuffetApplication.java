@@ -7,23 +7,18 @@ import com.codecool.ehotel.service.guest.GenerateGuestList;
 import com.codecool.ehotel.service.guest.GenerateRandomGuest;
 import com.codecool.ehotel.service.season.SeasonGetter;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 public class EHotelBuffetApplication {
     public static void main(String[] args) {
-
+        SeasonGetter seasonGetter = new SeasonGetter();
         GenerateRandomGuest guest = new GenerateRandomGuest();
         BuffetProvider buffet = new BuffetProvider();
         GenerateGuestList guestList = new GenerateGuestList();
-        LocalDate seasonStart = LocalDate.of(2020, 3, 10);
-        LocalDate seasonEnd =LocalDate.of(2020, 3, 13);
-        BreakfastManager breakfastManager = new BreakfastManager();
+
+        BreakfastManager breakfastManager = new BreakfastManager(seasonGetter,guestList,guest,buffet);
+
+
         breakfastManager.serveBreakfast();
-
-
-
-        //guest.generateGuestList(50);
 
     }
 }

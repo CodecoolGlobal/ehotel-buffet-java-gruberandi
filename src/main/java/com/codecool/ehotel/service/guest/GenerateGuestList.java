@@ -39,8 +39,9 @@ public class GenerateGuestList {
     private ArrayList<ArrayList<Guest>> getGuestForaCycle (ArrayList<ArrayList<Guest>> allGuest, int actualDay) {
 
         ArrayList<Guest> dailyGuestList = allGuest.get(actualDay);
-        System.out.println("dailyguests");
-        System.out.println(dailyGuestList.size());
+        System.out.println();
+        System.out.println("Guest numbers for the actual day(" + actualDay + "): " + dailyGuestList.size());
+        System.out.println();
         ArrayList<ArrayList<Guest>> guestForTheActualCycle = new ArrayList<>();
         for ( int i = 0; i < 8; i++) {
             ArrayList<Guest> emptyArray = new ArrayList<>();
@@ -49,14 +50,10 @@ public class GenerateGuestList {
 
         for (Guest guest : dailyGuestList) {
             int randomCycleIndex = random.nextInt(0,8)  ;
-            System.out.println(randomCycleIndex);
-            System.out.println(guest);
             guestForTheActualCycle.get(randomCycleIndex).add(guest);
         }
         int index = 0;
         for (ArrayList<Guest> guests : guestForTheActualCycle) {
-            System.out.println("cycleGuests");
-            System.out.println(guestForTheActualCycle.get(index));
             index++;
         }
 

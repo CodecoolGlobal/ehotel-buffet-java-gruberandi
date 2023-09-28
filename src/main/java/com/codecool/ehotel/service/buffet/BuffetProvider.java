@@ -15,11 +15,9 @@ import java.util.Random;
 
 public class BuffetProvider implements BuffetService{
 
-    private Random random = new Random();
+    private List<Meal> Meals = new ArrayList<>();
 
-    public List<Meal> Meals = new ArrayList<>();
-
-    public int loss = 0;
+    private int loss = 0;
 
     public void generateMeals(LocalTime timestamp, int amount) {
         for (MealType mealtype : MealType.values()) {

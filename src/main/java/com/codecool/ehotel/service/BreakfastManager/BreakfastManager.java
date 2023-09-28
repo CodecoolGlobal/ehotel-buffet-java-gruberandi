@@ -20,26 +20,30 @@ import static com.codecool.ehotel.model.GuestType.*;
 
 public class BreakfastManager implements BreakfastService{
 
-    SeasonGetter seasonGetter = new SeasonGetter();
-    GenerateGuestList guestList = new GenerateGuestList();
-    GenerateRandomGuest randomGuests = new GenerateRandomGuest();
+   private final SeasonGetter seasonGetter;
+   private final GenerateGuestList guestList;
+   private final GenerateRandomGuest randomGuests;
+   private final BuffetProvider buffet;
     ArrayList<Guest> guests;
     ArrayList<ArrayList<Guest>> guestsForTheDay;
-    BuffetProvider buffet = new BuffetProvider();
-    int  sadCostumer = 0;
-    int happyCostumer = 0;
-    int guestamount = 0;
+
+   private int  sadCostumer = 0;
+   private int happyCostumer = 0;
+   private int guestamount = 0;
     List<Meal> Meals;
+
+   public BreakfastManager(SeasonGetter seasonGetter, GenerateGuestList generateGuestList, GenerateRandomGuest generateRandomGuest,BuffetProvider buffetProvider) {
+        this.seasonGetter = seasonGetter;
+        this.guestList = generateGuestList;
+        this.randomGuests = generateRandomGuest;
+        this.buffet = buffetProvider;
+    }
 
     public void serveBreakfast() {
         seasonGetter.getSeason();
         LocalDate seasonStart = seasonGetter.getSeasonStart();
         LocalDate seasonEnd = seasonGetter.getSeasonEnd();
         guests = randomGuests.generateGuestList(100, seasonStart, seasonEnd);
-
-
-
-        long actualDate = 0;
         long seasonLength = ChronoUnit.DAYS.between(seasonStart, seasonEnd) + 1;
 
        for (int i = 0; i < seasonLength; i++) {
@@ -47,8 +51,7 @@ public class BreakfastManager implements BreakfastService{
            List<Integer> remainingGuests;
            guestsForTheDay = guestList.getTheGuestForDay(i, guests, seasonStart, seasonEnd);
            for (int j = 0; j < guestsForTheDay.size(); j++) {
-               System.out.println("guestfortheday");
-               System.out.println(guestsForTheDay.get(j).size());
+               System.out.println("guest numbers for the actual cycle" + "(" +actualTime +"): " + guestsForTheDay.get(j).size() );
                remainingGuests = countGuestType(guestsForTheDay, j);
                getOptimalPortions(remainingGuests.get(0), remainingGuests.get(1), remainingGuests.get(2), actualTime);
                eatBreakfast(guestsForTheDay.get(j));
@@ -56,20 +59,19 @@ public class BreakfastManager implements BreakfastService{
                buffet.collectFoodWaste(actualTime);
            }
        }
-       System.out.println("Unhappy guests");
-       System.out.println(sadCostumer);
-       System.out.println("happy guests");
-       System.out.println(happyCostumer);
-       System.out.println("Loss:");
-       System.out.println(buffet.getLoss());
-       System.out.println("Guestamount");
-       System.out.println(guestamount);
+
+       System.out.println();
+       System.out.println("Total details:");
+       System.out.println("Unhappy guests: " + sadCostumer);
+       System.out.println("Happy guests: " + happyCostumer);
+       System.out.println("Loss: " + buffet.getLoss());
+       System.out.println("Guest amount: " + guestamount);
     };
     public void getOptimalPortions(int businessAmount, int touristAmount, int kidAmount, LocalTime actualTime) {
         buffet.generateMeals(actualTime, 1);
     };
 
-    public void eatBreakfast(ArrayList<Guest> guests) {
+    private void eatBreakfast(ArrayList<Guest> guests) {
         Meals = buffet.getFoodPortions();
         guestamount += guests.size();
         for (Guest guest : guests) {
