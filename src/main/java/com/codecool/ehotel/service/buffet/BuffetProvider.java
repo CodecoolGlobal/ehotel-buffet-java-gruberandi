@@ -39,7 +39,7 @@ public class BuffetProvider implements BuffetService{
         }
     };
 
-    public void collectFoodWaste(LocalTime timeCheck){
+    public void collectFoodWaste(LocalTime timeCheck) {
         for (Meal meal : Meals) {
             if (meal.mealType().getDurability().equals(MealDurability.SHORT) && meal.prepDate().plusMinutes(90).isBefore(timeCheck)) {
                 Meals.remove(meal);
@@ -48,6 +48,7 @@ public class BuffetProvider implements BuffetService{
                 Meals.remove(meal);
             }
         }
+    }
 
     public void eatMeal(MealType mealToEat) {
         List<Meal> filteredMeals = filterMeal(mealToEat);

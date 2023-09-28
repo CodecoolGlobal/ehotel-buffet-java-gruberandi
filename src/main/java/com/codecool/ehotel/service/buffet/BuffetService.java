@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface BuffetService {
      List<Meal> getFoodPortions();
-     void makeNewPortion();
+     void makeNewPortion(MealType mealtype, LocalTime timestamp, int amount);
      void collectFoodWaste(LocalTime timeCheck);
      void generateMeals(LocalTime timestamp, int amount);
      void eatMeal(MealType meal);
