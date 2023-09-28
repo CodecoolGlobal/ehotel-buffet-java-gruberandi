@@ -8,8 +8,8 @@ public class SeasonGetter implements GetSeason{
     ConsoleLogger logger = new ConsoleLogger();
     Scanner scanner = new Scanner(System.in);
 
-    LocalDate seasonStart;
-    LocalDate seasonEnd;
+    public LocalDate seasonStart;
+    public LocalDate seasonEnd;
     @Override
     public void getSeason(){
         logger.logInfo("Give a Start date (YYYY-MM-DD):");
@@ -20,6 +20,8 @@ public class SeasonGetter implements GetSeason{
         LocalDate endDate = LocalDate.parse(eDate);
         this.seasonStart = starterDate;
         this.seasonEnd = endDate;
+        System.out.println(seasonStart);
+        System.out.println(seasonEnd);
 
     }
 

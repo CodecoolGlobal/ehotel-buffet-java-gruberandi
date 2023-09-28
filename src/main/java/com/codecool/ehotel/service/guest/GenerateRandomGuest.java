@@ -18,7 +18,7 @@ public class GenerateRandomGuest implements GuestService{
     Scanner scanner = new Scanner(System.in);
     ConsoleLogger logger = new ConsoleLogger();
     String[] names = {"Alex" ,"Mia", "Zoe","Max"};
-    SeasonGetter seasonGetter;
+    SeasonGetter seasonGetter = new SeasonGetter();
 
 
     @Override
@@ -26,7 +26,7 @@ public class GenerateRandomGuest implements GuestService{
        long startDate = seasonStart.toEpochDay();
        long endDate = seasonEnd.toEpochDay();
        long seasonLong = endDate-startDate;
-       LocalDate generateRandomStartDate = LocalDate.ofEpochDay(random.nextLong(endDate - startDate)+ startDate);
+       LocalDate generateRandomStartDate = LocalDate.ofEpochDay(random.nextLong(startDate - 1, endDate + 1));
        long epochRandomStartDay = generateRandomStartDate.toEpochDay();
        long randomDay = random.nextLong(7);
        long randomDayBetweenSeasonLong = random.nextLong(seasonLong);
@@ -56,12 +56,11 @@ public class GenerateRandomGuest implements GuestService{
         GuestType guest = guestTypes.get(random.nextInt(0, guestTypes.size()));
         return  guest;
     }
-   public ArrayList<Guest> generateGuestList(int guestNumber){
+   public ArrayList<Guest> generateGuestList(int guestNumber, LocalDate seasonStart, LocalDate seasonEnd){
 
-       int randomGuestNUmber = random.nextInt(0,50);
        ArrayList<Guest> allGuest= new ArrayList<>();
-       for(int i = 0; i < guestNumber; i ++){
-          allGuest.add(generateRandomGuest(seasonGetter.getSeasonStart(),seasonGetter.getSeasonEnd()));
+       for(int i = 0; i < guestNumber; i++){
+          allGuest.add(generateRandomGuest(seasonStart, seasonEnd));
        }
 
        return  allGuest;
