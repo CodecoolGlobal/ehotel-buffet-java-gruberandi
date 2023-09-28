@@ -15,10 +15,8 @@ import java.util.logging.Logger;
 
 public class GenerateRandomGuest implements GuestService{
     Random random = new Random();
-    Scanner scanner = new Scanner(System.in);
-    ConsoleLogger logger = new ConsoleLogger();
     String[] names = {"Alex" ,"Mia", "Zoe","Max"};
-    SeasonGetter seasonGetter = new SeasonGetter();
+
 
 
     @Override
@@ -31,41 +29,36 @@ public class GenerateRandomGuest implements GuestService{
        long randomDay = random.nextLong(7);
        long randomDayBetweenSeasonLong = random.nextLong(seasonLong);
        LocalDate CheckoutDate = LocalDate.ofEpochDay(epochRandomStartDay + randomDay);
-       LocalDate ChekoutDateWithSortSeason = LocalDate.ofEpochDay(epochRandomStartDay + randomDayBetweenSeasonLong);
+       LocalDate CheckoutDateWithSortSeason = LocalDate.ofEpochDay(epochRandomStartDay + randomDayBetweenSeasonLong);
       if(seasonLong > 7){
          return new Guest(pickName(names),pickAGuestType(),generateRandomStartDate,CheckoutDate);
       }else {
-         return new Guest(pickName(names), pickAGuestType(), generateRandomStartDate, ChekoutDateWithSortSeason);
+         return new Guest(pickName(names), pickAGuestType(), generateRandomStartDate, CheckoutDateWithSortSeason);
       }
-
     }
 
     @Override
-    public Set<Guest> getGuestsForDay(List<Guest> guests, LocalDate date) {
-
-        return null;
-    }
-    private String pickName(String[] names){
+    public String pickName(String[] names){
         String name = names[random.nextInt(0,names.length)];
         return name;
     }
-    private  GuestType pickAGuestType(){
+    @Override
+    public  GuestType pickAGuestType(){
         ArrayList<GuestType> guestTypes = new ArrayList<>( Arrays.asList(GuestType.KID,
                                                                          GuestType.BUSINESS,
                                                                             GuestType.TOURIST));
         GuestType guest = guestTypes.get(random.nextInt(0, guestTypes.size()));
         return  guest;
     }
+    @Override
    public ArrayList<Guest> generateGuestList(int guestNumber, LocalDate seasonStart, LocalDate seasonEnd){
 
        ArrayList<Guest> allGuest= new ArrayList<>();
        for(int i = 0; i < guestNumber; i++){
           allGuest.add(generateRandomGuest(seasonStart, seasonEnd));
        }
-
        return  allGuest;
    }
-
 }
 
 
