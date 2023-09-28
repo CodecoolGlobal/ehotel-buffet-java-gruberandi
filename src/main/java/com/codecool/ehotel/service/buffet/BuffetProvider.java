@@ -1,5 +1,6 @@
 package com.codecool.ehotel.service.buffet;
 
+import com.codecool.ehotel.model.Guest;
 import com.codecool.ehotel.model.Meal;
 import com.codecool.ehotel.model.MealDurability;
 import com.codecool.ehotel.model.MealType;
@@ -7,10 +8,14 @@ import com.codecool.ehotel.model.MealType;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class BuffetProvider implements BuffetService{
+
+    private Random random = new Random();
 
     public List<Meal> Meals = new ArrayList<>();
 
@@ -43,7 +48,6 @@ public class BuffetProvider implements BuffetService{
                 Meals.remove(meal);
             }
         }
-    };
 
     public void eatMeal(MealType mealToEat) {
         List<Meal> filteredMeals = filterMeal(mealToEat);
@@ -70,4 +74,6 @@ public class BuffetProvider implements BuffetService{
         }
         Meals.remove(freshestMeal);
     }
+
+
 }
