@@ -2,9 +2,11 @@ package com.codecool.ehotel.service.guest;
 
 import com.codecool.ehotel.model.Guest;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class GenerateGuestList {
@@ -23,42 +25,45 @@ public class GenerateGuestList {
     }
 
     private ArrayList<ArrayList<Guest>> getCycleList(ArrayList<Guest> guests, LocalDate starterDay , LocalDate endDate) {
-        long seasonDays = ChronoUnit.DAYS.between(starterDay,endDate);
+        long seasonDays = ChronoUnit.DAYS.between(starterDay,endDate) + 1;
 
         ArrayList<ArrayList<Guest>> listForCycle = new ArrayList<>();
 
-        for (int i = 1; i < seasonDays;i++) {
-
+        for (int i = 0; i <= seasonDays;i++) {
             listForCycle.add(getGuestForActualDate(guests,starterDay.plusDays(i)));
         }
+
         return listForCycle;
     }
 
     private ArrayList<ArrayList<Guest>> getGuestForaCycle (ArrayList<ArrayList<Guest>> allGuest, int actualDay) {
 
-        ArrayList<ArrayList<Guest>> saveAllGuest = allGuest;
-
+        ArrayList<Guest> dailyGuestList = allGuest.get(actualDay);
+        System.out.println("dailyguests");
+        System.out.println(dailyGuestList.size());
         ArrayList<ArrayList<Guest>> guestForTheActualCycle = new ArrayList<>();
-        System.out.println("Showme");
-        System.out.println(allGuest.get(actualDay));
-        System.out.println(allGuest.get(actualDay).size());
-        int getGuestNumbers = allGuest.get(actualDay).size();
-        for (int j = 0; j < 8; j++) {
-            int getListSize = Math.round(random.nextFloat(getGuestNumbers) / 8);
-            ArrayList<Guest> choosedGuest = new ArrayList<>(getListSize);
-
-            for (int i = 0; i < getListSize; i++) {
-                choosedGuest.add(saveAllGuest.get(actualDay).get(i));
-            }
-            guestForTheActualCycle.add(choosedGuest);
+        for ( int i = 0; i < 8; i++) {
+            ArrayList<Guest> emptyArray = new ArrayList<>();
+            guestForTheActualCycle.add(emptyArray);
         }
 
-        System.out.println(guestForTheActualCycle + "getGuestForACycle");
+        for (Guest guest : dailyGuestList) {
+            int randomCycleIndex = random.nextInt(0,8)  ;
+            System.out.println(randomCycleIndex);
+            System.out.println(guest);
+            guestForTheActualCycle.get(randomCycleIndex).add(guest);
+        }
+        int index = 0;
+        for (ArrayList<Guest> guests : guestForTheActualCycle) {
+            System.out.println("cycleGuests");
+            System.out.println(guestForTheActualCycle.get(index));
+            index++;
+        }
+
         return guestForTheActualCycle;
     }
 
     public ArrayList<ArrayList<Guest>> getTheGuestForDay (int actualDay,ArrayList<Guest> guests, LocalDate starterDay , LocalDate endDate) {
-
         return (getGuestForaCycle(getCycleList(guests, starterDay, endDate),actualDay));
     }
 }

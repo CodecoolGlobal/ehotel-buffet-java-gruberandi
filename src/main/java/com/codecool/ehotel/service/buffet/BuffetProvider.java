@@ -46,11 +46,9 @@ public class BuffetProvider implements BuffetService{
             LocalTime endDate = meal.prepDate().plusMinutes(90);
             if (meal.mealType().getDurability().equals(MealDurability.SHORT) && (endDate.isBefore(timeCheck) || endDate.equals(timeCheck))) {
                 rottenFoods.add(meal);
-                System.out.println(meal.mealType());
             } else if (meal.mealType().getDurability().equals(MealDurability.MEDIUM) && timeCheck.equals(endOfBreakfast)) {
                 loss += meal.mealType().getCost();
                 rottenFoods.add(meal);
-                System.out.println(meal.mealType());
             }
 
         }

@@ -26,7 +26,7 @@ public class GenerateRandomGuest implements GuestService{
        long startDate = seasonStart.toEpochDay();
        long endDate = seasonEnd.toEpochDay();
        long seasonLong = endDate-startDate;
-       LocalDate generateRandomStartDate = LocalDate.ofEpochDay(random.nextLong(endDate - startDate)+ startDate);
+       LocalDate generateRandomStartDate = LocalDate.ofEpochDay(random.nextLong(startDate - 1, endDate + 1));
        long epochRandomStartDay = generateRandomStartDate.toEpochDay();
        long randomDay = random.nextLong(7);
        long randomDayBetweenSeasonLong = random.nextLong(seasonLong);
