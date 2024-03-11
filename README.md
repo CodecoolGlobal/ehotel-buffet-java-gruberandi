@@ -17,7 +17,7 @@ Optimization Goals: Balances the need to minimize dissatisfaction by keeping buf
 food waste.
 
 Built With
-This system is built with Java
+This system is built with Java.
 
 ### Getting Started
 
@@ -27,7 +27,7 @@ To set up the Buffet Management System locally, follow these simple steps:
    ```sh
    git clone https://github.com/your_username_/Project-Name.git
    ```
-2. Open the folder that include the Application.java file
+2. Open the folder that include the Application.java file.
 3. Open Cmd and write the next command : javac [filename.java] and  then press enter.
 
 Feel free to explore and enhance the Buffet Management System for an efficient and delightful buffet experience! 🍽️
