@@ -17,8 +17,7 @@ Optimization Goals: Balances the need to minimize dissatisfaction by keeping buf
 food waste.
 
 Built With
-This system is built with Java:
-[![Java][Java]][Java-url]
+This system is built with Java
 
 ### Getting Started
 
