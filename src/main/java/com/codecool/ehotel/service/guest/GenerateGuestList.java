@@ -1,6 +1,7 @@
 package com.codecool.ehotel.service.guest;
 
 import com.codecool.ehotel.model.Guest;
+import com.codecool.ehotel.service.season.SeasonGetter;
 
 import java.lang.reflect.Array;
 import java.time.LocalDate;
@@ -12,6 +13,7 @@ import java.util.Random;
 public class GenerateGuestList {
 
     Random random = new Random();
+    SeasonGetter seasonGetter = new SeasonGetter();
 
     private ArrayList<Guest> getGuestForActualDate (ArrayList<Guest> guests, LocalDate actualDate) {
         ArrayList<Guest> actualGuests = new ArrayList<>();
@@ -36,11 +38,11 @@ public class GenerateGuestList {
         return listForCycle;
     }
 
-    private ArrayList<ArrayList<Guest>> getGuestForaCycle (ArrayList<ArrayList<Guest>> allGuest, int actualDay) {
+    private ArrayList<ArrayList<Guest>> getGuestForaCycle (ArrayList<ArrayList<Guest>> allGuest, int actualDay, LocalDate starterDay) {
 
         ArrayList<Guest> dailyGuestList = allGuest.get(actualDay);
         System.out.println();
-        System.out.println("Guest numbers for the actual day(" + actualDay + "): " + dailyGuestList.size());
+        System.out.println("Guest numbers for the actual day(" + starterDay.plusDays(actualDay) + "): " + dailyGuestList.size());
         System.out.println();
         ArrayList<ArrayList<Guest>> guestForTheActualCycle = new ArrayList<>();
         for ( int i = 0; i < 8; i++) {
@@ -61,6 +63,6 @@ public class GenerateGuestList {
     }
 
     public ArrayList<ArrayList<Guest>> getTheGuestForDay (int actualDay,ArrayList<Guest> guests, LocalDate starterDay , LocalDate endDate) {
-        return (getGuestForaCycle(getCycleList(guests, starterDay, endDate),actualDay));
+        return (getGuestForaCycle(getCycleList(guests, starterDay, endDate),actualDay, starterDay));
     }
 }
